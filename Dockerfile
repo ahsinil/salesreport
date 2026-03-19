@@ -1,17 +1,17 @@
-FROM php:8.2-fpm-alpine AS app
+FROM php:8.4-fpm AS app
 
 WORKDIR /var/www/html
 
 RUN apk add --no-cache \
-        git \
-        libzip-dev \
-        postgresql-dev \
-        unzip \
+    git \
+    libzip-dev \
+    postgresql-dev \
+    unzip \
     && docker-php-ext-install \
-        bcmath \
-        pcntl \
-        pdo_pgsql \
-        zip
+    bcmath \
+    pcntl \
+    pdo_pgsql \
+    zip
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -20,17 +20,17 @@ COPY --chmod=755 docker/app/entrypoint.sh /usr/local/bin/app-entrypoint
 
 RUN test -f public/build/manifest.json \
     && composer install \
-        --no-dev \
-        --no-interaction \
-        --prefer-dist \
-        --optimize-autoloader \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader \
     && mkdir -p \
-        bootstrap/cache \
-        storage/framework/cache \
-        storage/framework/sessions \
-        storage/framework/testing \
-        storage/framework/views \
-        storage/logs \
+    bootstrap/cache \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/testing \
+    storage/framework/views \
+    storage/logs \
     && chown -R www-data:www-data /var/www/html
 
 EXPOSE 9000
