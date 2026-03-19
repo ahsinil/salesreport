@@ -1,15 +1,24 @@
-FROM php:8.4-fpm AS app
+FROM php:8.2-fpm-alpine AS app
 
 WORKDIR /var/www/html
 
 RUN apk add --no-cache \
     git \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
     libzip-dev \
+    mariadb-client \
     postgresql-dev \
     unzip \
+    && docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
     && docker-php-ext-install \
     bcmath \
+    gd \
     pcntl \
+    pdo_mysql \
     pdo_pgsql \
     zip
 
