@@ -1,0 +1,4 @@
+[mcp_servers.laravel-boost]
+command = "/bin/zsh"
+args = ["-lc", "exec php artisan boost:mcp"]
+cwd = "/Users/user/Codes/laravel/salesreport"
