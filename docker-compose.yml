@@ -41,7 +41,7 @@ services:
           "CMD",
           "php",
           "-r",
-          "$connection = @fsockopen('127.0.0.1', 9000); exit($connection ? 0 : 1);",
+          "$$connection = @fsockopen('127.0.0.1', 9000); exit($$connection ? 0 : 1);",
         ]
       interval: 5s
       timeout: 5s
